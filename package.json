@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext js"
+    "lint": "eslint --ext js",
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "start": "webpack serve --progress"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,23 @@
   },
   "homepage": "https://github.com/f-lab-edu/ensemble#readme",
   "devDependencies": {
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.3",
     "eslint": "^8.34.0",
-    "eslint-config-airbnb": "^19.0.4"
+    "eslint-config-airbnb": "^19.0.4",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.2",
+    "source-map-loader": "^4.0.1",
+    "style-loader": "^3.3.1",
+    "terser-webpack-plugin": "^5.3.6",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "firebase": "^9.17.1",
+    "firebase-tools": "^11.23.1"
   }
 }
