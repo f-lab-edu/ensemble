@@ -5,12 +5,12 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAhXikJbMNO2HCGrdYbs0vKLR_KP8BS67M',
-  authDomain: 'ensemble-4ba6f.firebaseapp.com',
-  projectId: 'ensemble-4ba6f',
-  storageBucket: 'ensemble-4ba6f.appspot.com',
-  messagingSenderId: '264379873721',
-  appId: '1:264379873721:web:1d88ec51964e5e23869e68',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,24 +18,9 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const postCollection = collection(db, 'post');
 
-const fetchData = async (target) => {
-  try {
-    const posts = await getDocs(postCollection);
-    posts.forEach((post) => {
-      const { title, contents } = post.data();
-      const $li = document.createElement('li');
-      $li.className = 'post-container';
-      $li.innerHTML = `
-        <a>
-          <div class="post-title">${title}</div>
-          <div class="post-body">${contents}</div>
-        </a>  
-      `;
-      target.appendChild($li);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+const fetchData = async () => {
+  const posts = await getDocs(postCollection);
+  return posts;
 };
 
 const setData = async (uid) => {

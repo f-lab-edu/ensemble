@@ -4,13 +4,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const webpackMode = process.env.NODE_ENV || 'development';
 
 module.exports = {
   mode: webpackMode,
   entry: {
-    main: './main.js',
+    main: './src/main.js',
   },
   output: {
     path: path.resolve('./dist'),
@@ -77,5 +78,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
+    new Dotenv(),
   ],
 };
