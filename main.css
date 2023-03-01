@@ -1,0 +1,54 @@
+article, aside, figure, footer, header, hgroup, section {
+  display: block;
+}
+ol, ul {
+  list-style: none;
+}
+header {
+  position: sticky;
+  width: 100%;
+  height: 5rem;
+  background: rgb(241, 243, 245);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.title {
+  font-size: 2.4rem;
+}
+nav {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+.community-header {
+  margin: 0 auto;
+  height: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: .71;
+  color: #fff;
+  padding: 24px 0;
+  width: 100%;
+  background-color: #333b3d;
+}
+.post-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem 0px;
+}
+.post-container {
+  width: 20rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 2px solid rgb(206, 212, 218);
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
+  background: rgb(245, 245, 245);
+}

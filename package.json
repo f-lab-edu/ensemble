@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext js",
     "build": "cross-env NODE_ENV=production webpack --progress",
-    "start": "webpack serve --progress"
+    "start": "webpack serve --progress",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -19,14 +20,18 @@
   "bugs": {
     "url": "https://github.com/f-lab-edu/ensemble/issues"
   },
-  "homepage": "https://github.com/f-lab-edu/ensemble#readme",
+  "homepage": "https://github.com/f-lab-edu/ensemble",
   "devDependencies": {
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
+    "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.34.0",
     "eslint-config-airbnb": "^19.0.4",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "source-map-loader": "^4.0.1",
