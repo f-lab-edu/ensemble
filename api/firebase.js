@@ -23,15 +23,15 @@ const fetchData = async () => {
   return posts;
 };
 
-const setData = async (uid) => {
+const setData = async (title, contents, date) => {
   await addDoc(postCollection, {
-    title: '스터디 모집합니다.',
-    contents: '모각코',
-    writer: uid,
+    title,
+    contents,
+    writer: 'admin',
     hits: 0,
     tags: ['서울', 'javascript'],
-    rgt_dt: Timestamp.fromDate(new Date(2023, 1, 28)),
-    deadline: Timestamp.fromDate(new Date(2023, 2, 10)),
+    rgt_dt: Timestamp.fromDate(new Date()),
+    deadline: Timestamp.fromDate(new Date(date)),
   });
 };
 
