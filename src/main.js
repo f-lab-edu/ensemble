@@ -19,7 +19,7 @@ const render = (path) => {
     const component = routes.find((route) => route.path === _path)?.component || NotFound;
     $app.replaceChildren(component());
   } catch (error) {
-    $app.replaceChildren(NotFound());
+    $app.replaceChildren(NotFound(error));
   }
 };
 
