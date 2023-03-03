@@ -19,6 +19,9 @@ module.exports = {
   },
   devServer: {
     liveReload: true,
+    historyApiFallback: {
+      disableDotRule: true,
+    },
   },
   optimization: {
     minimizer:

@@ -8,6 +8,7 @@
     "lint": "eslint --ext js",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "start": "webpack serve --progress",
+    "predeploy": "npm run build && cp 404.html ./dist",
     "deploy": "gh-pages -d dist"
   },
   "repository": {
@@ -20,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/f-lab-edu/ensemble/issues"
   },
-  "homepage": "https://github.com/f-lab-edu/ensemble",
+  "homepage": "https://github.com/f-lab-edu/ensemble/",
   "devDependencies": {
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
