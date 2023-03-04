@@ -4,6 +4,7 @@ const NotFound = (errorMessage) => {
     <h1>Not Found</h1>
   `;
   if (errorMessage) $p.append(document.createTextNode('errorMessage'));
+
   return $p;
 };
 

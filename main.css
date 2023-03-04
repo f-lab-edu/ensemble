@@ -4,6 +4,13 @@ article, aside, figure, footer, header, hgroup, section {
 ol, ul {
   list-style: none;
 }
+button {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background-color: transparent;
+}
 header {
   position: sticky;
   width: 100%;
@@ -118,8 +125,52 @@ nav {
 	font-size: 16px;
 	resize: both;
 }
-.post-error {
+.error-message {
   font-size: 1rem;
   color: rgb(255,0,0);
   font-weight: 700;
+}
+.user-title{
+  text-align: center;
+}
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user-form-input {
+  display: flex;
+  flex-direction:column;
+  margin: 10px 0;
+}
+.user-form-input input {
+  appearance: none;
+  margin-top: 4px;
+  width: 320px;
+  padding: 13px 12px;
+  height: 20px;
+  font-size: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: #fff;
+}
+.user-form-button {
+  margin-top: 16px;
+}
+.user-form-button a {
+  border-color: #00c471;
+  font-weight: 700;
+  background-color: #00c471;
+  border: 1px solid;
+  color: #fff;
+  cursor: pointer;
+  appearance: none;
+  width: 346px;
+  height: 48px;
+  font-size: 15px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
