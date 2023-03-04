@@ -27,14 +27,31 @@ nav {
 }
 .community-header {
   margin: 0 auto;
-  height: 20px;
+  height: 40px;
   font-size: 24px;
   font-weight: 700;
-  line-height: .71;
   color: #fff;
   padding: 24px 0;
   width: 100%;
   background-color: #333b3d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.community-header p {
+  margin-left: 2rem;
+}
+.community-header a {
+  background-color: #fff;
+  color: #333b3d;
+  position: relative;
+  display: inline-flex;
+  border: 1px solid;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2rem;
+  font-size: 1.3rem;
 }
 .post-list ul {
   display: flex;
@@ -51,4 +68,58 @@ nav {
   border: 2px solid rgb(206, 212, 218);
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
   background: rgb(245, 245, 245);
+}
+.post-title-input {
+  font-size: 2rem;
+  outline: 0px;
+  font-weight: 700;
+  border-width: 0px;
+}
+.post-button {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.post-button a {
+  margin: 0 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0px 22px;
+  height: 42px;
+  line-height: 2.5;
+}
+.post-cancel-button {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(206, 212, 218);
+}
+.post-cancel-button:hover {
+  color: rgb(0, 0, 0);
+  background-color: rgb(241, 243, 245);
+  border: 1px solid rgb(206, 212, 218);
+}
+.post-register-button {
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 196, 113);
+}
+.post-register-button:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 167, 96);
+}
+.post-contents-input {
+  width: 100%;
+	height: 200px;
+	padding: 10px;
+	box-sizing: border-box;
+	border: solid 2px #000;
+	border-radius: 5px;
+	font-size: 16px;
+	resize: both;
+}
+.post-error {
+  font-size: 1rem;
+  color: rgb(255,0,0);
+  font-weight: 700;
 }

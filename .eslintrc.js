@@ -33,5 +33,6 @@ module.exports = {
     'key-spacing': ['error', { mode: 'strict' }],
     'arrow-spacing': ['error', { before: true, after: true }],
     'linebreak-style': 'off',
+    'no-underscore-dangle': 'off',
   },
 };
