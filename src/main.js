@@ -1,12 +1,15 @@
+import Header from './components/HeaderComponent';
 import Post from './components/PostComponent';
 import PostWirte from './components/PostWriteComponent';
 import NotFound from './components/NotFoundComponent';
 import Signup from './components/SignupComponent';
 import Login from './components/LoginComponent';
+
 import { setData, createUser, signIn } from '../api/firebase';
+import createElement from './util/util';
 
 const $app = document.querySelector('#app');
-const $navigation = document.querySelector('#navigation');
+// const $navigation = document.querySelector('#navigation');
 
 const authErrorMessage = {
   'auth/invalid-email': '이메일 형식이 올바르지 않습니다.',
@@ -27,15 +30,19 @@ const routes = [
 const render = (path) => {
   const _path = path ?? window.location.pathname;
   try {
+    const $header = Header();
+    const $main = createElement('main');
     const component = routes.find((route) => route.path === _path)?.component || NotFound;
-    $app.replaceChildren(component());
+    $main.append(component());
+
+    $app.replaceChildren($header, $main);
   } catch (error) {
     $app.replaceChildren(NotFound(error));
   }
 };
 
 const handleClickRouter = (event) => {
-  if (!event.target.classList.contains('router')) return;
+  if (!event.target.matches('[data-link]')) return;
   event.preventDefault();
   const path = event.target.getAttribute('href');
   if (window.location.pathname === path) return;
@@ -43,7 +50,7 @@ const handleClickRouter = (event) => {
   render(path);
 };
 
-$navigation.addEventListener('click', handleClickRouter);
+// $navigation.addEventListener('click', handleClickRouter);
 $app.addEventListener('click', handleClickRouter);
 $app.addEventListener('click', (event) => {
   if (event.target.classList.contains('post-register-button')) {
@@ -115,7 +122,8 @@ $app.addEventListener('click', (event) => {
     signIn(email, password)
       .then((userCredential) => {
         console.log(userCredential.user);
-
+        const { user } = userCredential;
+        localStorage.setItem('user', JSON.stringify(user));
         const path = event.target.getAttribute('href');
         if (window.location.pathname === path) return;
         window.history.pushState(null, null, path);

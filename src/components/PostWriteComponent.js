@@ -28,7 +28,7 @@ const PostWrite = () => {
     'div',
     `
       <a href="/" class="post-register-button">등록</a>
-      <a href="/" class="post-cancel-button router">취소</a>
+      <a href="/" class="post-cancel-button" data-link>취소</a>
     `,
     'post-button',
   );

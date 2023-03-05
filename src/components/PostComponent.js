@@ -6,7 +6,7 @@ const Post = () => {
   $headerSection.className = 'community-header';
   $headerSection.innerHTML = `
     <p>함께 성장할 스터디를 모집해보세요</p>
-    <a href="/postwrite" class="router">글쓰기</a>
+    <a href="/postwrite" data-link>글쓰기</a>
   `;
   const $postSection = document.createElement('section');
   $postSection.className = 'post-list';
