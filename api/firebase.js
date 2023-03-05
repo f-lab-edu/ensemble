@@ -46,27 +46,14 @@ const deleteData = async (id) => {
   await deleteDoc(doc(db, 'post', id));
 };
 
-const createUser = (email, password) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log(userCredential.user);
-    })
-    .catch(() => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-    });
+const createUser = async (email, password) => {
+  const createUserPromise = await createUserWithEmailAndPassword(auth, email, password);
+  return createUserPromise;
 };
 
-const signIn = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const { user } = userCredential;
-      console.log(user);
-    })
-    .catch(() => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-    });
+const signIn = async (email, password) => {
+  const signInPromise = await signInWithEmailAndPassword(auth, email, password);
+  return signInPromise;
 };
 
 export {

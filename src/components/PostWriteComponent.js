@@ -1,14 +1,13 @@
 import createElement from '../util/util';
 
 const PostWrite = () => {
-  const $postWrite = createElement('div');
+  const today = new Date();
 
+  const $postWrite = createElement('div');
   const $postTitleInput = createElement(
     'div',
     '<input type="text" class="post-title-input" placeholder="제목을 입력해주세요."/>',
   );
-
-  const today = new Date();
   const $postDateInput = createElement(
     'div',
     `
@@ -20,14 +19,11 @@ const PostWrite = () => {
       />
     `,
   );
-
   const $postContentsInput = createElement(
     'div',
     '<textarea class="post-contents-input" />',
   );
-
-  const $postError = createElement('div', '', 'post-error');
-
+  const $postError = createElement('div', '', 'error-message');
   const $postButton = createElement(
     'div',
     `
@@ -44,6 +40,7 @@ const PostWrite = () => {
     $postError,
     $postButton,
   );
+
   return $postWrite;
 };
 

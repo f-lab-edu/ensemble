@@ -31,6 +31,7 @@ const Post = () => {
     .catch((error) => {
       $post.append(document.createTextNode(error));
     });
+
   return $post;
 };
 
