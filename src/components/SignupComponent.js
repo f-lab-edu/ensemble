@@ -1,4 +1,4 @@
-import createElement from '../util/util';
+import { createElement } from '../utils/util';
 
 const Signup = () => {
   const $signup = createElement('form', '', 'user-form');

@@ -1,4 +1,4 @@
-import createElement from '../util/util';
+import { createElement } from '../utils/util';
 import { fetchData } from '../../api/firebase';
 
 const Post = () => {
@@ -8,7 +8,7 @@ const Post = () => {
       'section',
       `
         <p>함께 성장할 스터디를 모집해보세요</p>
-        <a href="/postwrite" data-link>글쓰기</a>
+        <a href="/postwrite" class="routing">글쓰기</a>
       `,
       'community-header',
     )

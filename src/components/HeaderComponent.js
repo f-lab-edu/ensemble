@@ -1,16 +1,16 @@
-import createElement from '../util/util';
+import { createElement } from '../utils/util';
 
 const Header = () => {
   const $header = createElement('header');
   const $title = createElement(
     'div',
-    '<a href="/" class="title" data-link>ensemble</a>',
+    '<a href="/" class="title routing">ensemble</a>',
   );
   const $navigation = localStorage.getItem('user')
     ? createElement(
       'nav',
       `
-        <a href="/users" data-link>마이페이지</a>
+        <a href="/users" class="routing">마이페이지</a>
         <a href="/" class="logout-button">로그아웃</a>
       `,
       'navigation',
@@ -18,8 +18,8 @@ const Header = () => {
     : createElement(
       'nav',
       `
-        <a href="/login" data-link>로그인</a>
-        <a href="/signup" data-link>회원가입</a>
+        <a href="/login" class="routing">로그인</a>
+        <a href="/signup" class="routing">회원가입</a>
       `,
       'navigation',
     );
