@@ -14,8 +14,8 @@ const PostWrite = () => {
       마감일: <input 
         type="date"
         class="post-date-input"
-        value="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDay()).toString().padStart(2, '0')}"
-        min="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDay() + 1).toString().padStart(2, '0')}"
+        value="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}"
+        min="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDate() + 1).toString().padStart(2, '0')}"
       />
     `,
   );

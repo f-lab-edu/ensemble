@@ -5,11 +5,12 @@ import NotFound from './components/NotFoundComponent';
 import Signup from './components/SignupComponent';
 import Login from './components/LoginComponent';
 
-import { setData, createUser, signIn } from '../api/firebase';
+import {
+  setData, createUser, signIn, logout,
+} from '../api/firebase';
 import createElement from './util/util';
 
 const $app = document.querySelector('#app');
-// const $navigation = document.querySelector('#navigation');
 
 const authErrorMessage = {
   'auth/invalid-email': '이메일 형식이 올바르지 않습니다.',
@@ -50,7 +51,6 @@ const handleClickRouter = (event) => {
   render(path);
 };
 
-// $navigation.addEventListener('click', handleClickRouter);
 $app.addEventListener('click', handleClickRouter);
 $app.addEventListener('click', (event) => {
   if (event.target.classList.contains('post-register-button')) {
@@ -74,7 +74,8 @@ $app.addEventListener('click', (event) => {
       return;
     }
 
-    setData(title, contents, date);
+    const user = JSON.parse(localStorage.getItem('user'));
+    setData(title, contents, date, user.uid);
 
     const path = event.target.getAttribute('href');
     if (window.location.pathname === path) return;
@@ -121,9 +122,9 @@ $app.addEventListener('click', (event) => {
 
     signIn(email, password)
       .then((userCredential) => {
-        console.log(userCredential.user);
         const { user } = userCredential;
         localStorage.setItem('user', JSON.stringify(user));
+
         const path = event.target.getAttribute('href');
         if (window.location.pathname === path) return;
         window.history.pushState(null, null, path);
@@ -131,6 +132,21 @@ $app.addEventListener('click', (event) => {
       })
       .catch((error) => {
         $errorMessage.innerHTML = authErrorMessage[error.code];
+      });
+  }
+
+  if (event.target.classList.contains('logout-button')) {
+    logout()
+      .then(() => {
+        localStorage.removeItem('user');
+
+        const path = event.target.getAttribute('href');
+        if (window.location.pathname === path) return;
+        window.history.pushState(null, null, path);
+        render(path);
+      })
+      .catch((error) => {
+        alert(`로그아웃에 실패하셨습니다.${error.code}`);
       });
   }
 });

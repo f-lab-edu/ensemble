@@ -11,7 +11,7 @@ const Header = () => {
       'nav',
       `
         <a href="/users" data-link>마이페이지</a>
-        <a href="/" data-link>로그아웃</a>
+        <a href="/" class="logout-button">로그아웃</a>
       `,
       'navigation',
     )
