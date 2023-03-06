@@ -18,6 +18,14 @@ const createElement = (tagName, innerHTML, className) => {
   return $elemet;
 };
 
+const formatPostDate = (date, number) => {
+  const fostDate = number
+    ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() + number).toString().padStart(2, '0')}`
+    : `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate()).toString().padStart(2, '0')}`;
+
+  return fostDate;
+};
+
 const handleClickApp = {
   routing: (event, render) => {
     event.preventDefault();
@@ -124,5 +132,6 @@ const handleClickApp = {
 
 export {
   createElement,
+  formatPostDate,
   handleClickApp,
 };

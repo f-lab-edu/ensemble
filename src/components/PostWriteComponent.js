@@ -1,4 +1,4 @@
-import { createElement } from '../utils/util';
+import { createElement, formatPostDate } from '../utils/util';
 
 const PostWrite = () => {
   const today = new Date();
@@ -14,8 +14,8 @@ const PostWrite = () => {
       마감일: <input 
         type="date"
         class="post-date-input"
-        value="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}"
-        min="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDate() + 1).toString().padStart(2, '0')}"
+        value="${formatPostDate(today)}"
+        min="${formatPostDate(today, 1)}"
       />
     `,
   );
