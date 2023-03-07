@@ -1,31 +1,40 @@
 import selectUser from '../utils/indexedDB';
 import { createElement } from '../utils/util';
+import { logout } from '../../api/firebase';
 
-const Header = () => {
+const handleClickLogout = (event, render) => {
+  event.preventDefault();
+  logout();
+  const path = event.target.getAttribute('href');
+  window.history.pushState(null, null, path);
+  render(path);
+};
+
+const Header = async (render) => {
   const $header = createElement('header');
   const $title = createElement(
     'div',
-    '<a href="/" class="title routing">ensemble</a>',
+    '<a href="/" class="title" data-link>ensemble</a>',
   );
   const $navigation = createElement('nav', '', 'navigation');
-  selectUser()
-    .then((user) => {
-      $navigation.innerHTML = user
-        ? `
-          <a href="/users" class="routing">마이페이지</a>
-          <a href="/" class="logout-button">로그아웃</a>
-        `
-        : `
-          <a href="/login" class="routing">로그인</a>
-          <a href="/signup" class="routing">회원가입</a>
-        `;
-    })
-    .catch((error) => {
-      $navigation.innerHTML = `<p>${error}</p>`;
-    });
+  const user = await selectUser();
+  if (user) {
+    $navigation.innerHTML = `
+      <a href="/users" data-link>마이페이지</a>
+      <a href="/" id="logout-button">로그아웃</a>
+    `;
+    const $logoutButton = $navigation.querySelector('#logout-button');
+    $logoutButton.addEventListener('click', (event) => { handleClickLogout(event, render); });
+    $header.append($title, $navigation);
+    return $header;
+  }
+
+  $navigation.innerHTML = `
+    <a href="/login" data-link>로그인</a>
+    <a href="/signup" data-link>회원가입</a>
+  `;
 
   $header.append($title, $navigation);
-
   return $header;
 };
 

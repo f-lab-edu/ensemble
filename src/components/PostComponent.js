@@ -10,7 +10,7 @@ const Post = () => {
       $headerSection.innerHTML = user
         ? `
           <p>함께 성장할 스터디를 모집해보세요</p>
-          <a href="/postwrite" class="routing">글쓰기</a>
+          <a href="/postwrite" data-link>글쓰기</a>
         `
         : `
           <p>함께 성장할 스터디를 모집해보세요</p>
