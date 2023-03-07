@@ -1,6 +1,7 @@
 import Header from './components/HeaderComponent';
 import Post from './components/PostComponent';
 import PostWrite from './components/PostWriteComponent';
+import PostView from './components/PostViewComponent';
 import NotFound from './components/NotFoundComponent';
 import Signup from './components/SignupComponent';
 import Login from './components/LoginComponent';
@@ -14,6 +15,7 @@ const routes = [
   { path: '/postwrite', component: PostWrite },
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
+  { path: '/postview', component: PostView },
 ];
 
 const render = async (path) => {
@@ -21,7 +23,9 @@ const render = async (path) => {
   try {
     const $header = await Header(render);
     const $main = createElement('main');
-    const component = routes.find((route) => route.path === _path)?.component || NotFound;
+    const component = _path.split('/').length - 1 > 1
+      ? routes.find((route) => route.path === `/${_path.split('/')[1]}`)?.component || NotFound
+      : routes.find((route) => route.path === _path)?.component || NotFound;
     $main.append(component(render));
 
     $app.replaceChildren($header, $main);

@@ -25,7 +25,7 @@ const handleClickRegisterPost = (event, render) => {
 
   selectUser()
     .then((user) => {
-      setData(title, contents, date, user.value.uid);
+      setData(title, contents, date, user.value.email, user.value.uid);
     });
 
   const path = event.target.getAttribute('href');

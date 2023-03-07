@@ -174,3 +174,6 @@ nav {
   justify-content: center;
   border-radius: 4px;
 }
+.post-view-contents {
+  padding: 16px 0
+}
