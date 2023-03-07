@@ -1,6 +1,40 @@
-import createElement from '../util/util';
+import selectUser from '../utils/indexedDB';
+import { createElement, formatPostDate } from '../utils/util';
+import { setData } from '../../api/firebase';
 
-const PostWrite = () => {
+const handleClickRegisterPost = (event, render) => {
+  event.preventDefault();
+  const $postTitle = document.querySelector('.post-title-input');
+  const $postDate = document.querySelector('.post-date-input');
+  const $postContents = document.querySelector('.post-contents-input');
+  const $errorMessage = document.querySelector('.error-message');
+
+  const title = $postTitle.value;
+  const contents = $postContents.value;
+  const date = $postDate.value;
+
+  if (!title) {
+    $errorMessage.innerHTML = '제목을 입력해주세요.';
+    return;
+  }
+
+  if (!contents) {
+    $errorMessage.innerHTML = '본문 내용을 작성해주세요.';
+    return;
+  }
+
+  selectUser()
+    .then((user) => {
+      setData(title, contents, date, user.value.uid);
+    });
+
+  const path = event.target.getAttribute('href');
+  if (window.location.pathname === path) return;
+  window.history.pushState(null, null, path);
+  render(path);
+};
+
+const PostWrite = (render) => {
   const today = new Date();
 
   const $postWrite = createElement('div');
@@ -14,8 +48,8 @@ const PostWrite = () => {
       마감일: <input 
         type="date"
         class="post-date-input"
-        value="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDay()).toString().padStart(2, '0')}"
-        min="${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${(today.getDay() + 1).toString().padStart(2, '0')}"
+        value="${formatPostDate(today)}"
+        min="${formatPostDate(today, 1)}"
       />
     `,
   );
@@ -23,21 +57,23 @@ const PostWrite = () => {
     'div',
     '<textarea class="post-contents-input" />',
   );
-  const $postError = createElement('div', '', 'error-message');
+  const $errorMessage = createElement('div', '', 'error-message');
   const $postButton = createElement(
     'div',
     `
-      <a href="/" class="post-register-button">등록</a>
-      <a href="/" class="post-cancel-button router">취소</a>
+      <a href="/" id="post-register-button">등록</a>
+      <a href="/" class="post-cancel-button" data-link>취소</a>
     `,
     'post-button',
   );
+  const $postRegisterButton = $postButton.querySelector('#post-register-button');
+  $postRegisterButton.addEventListener('click', (event) => { handleClickRegisterPost(event, render); });
 
   $postWrite.append(
     $postTitleInput,
     $postDateInput,
     $postContentsInput,
-    $postError,
+    $errorMessage,
     $postButton,
   );
 

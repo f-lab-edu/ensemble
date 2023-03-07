@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+} from 'firebase/auth';
 import {
   getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, Timestamp,
 } from 'firebase/firestore';
@@ -23,11 +25,11 @@ const fetchData = async () => {
   return posts;
 };
 
-const setData = async (title, contents, date) => {
+const setData = async (title, contents, date, uid) => {
   await addDoc(postCollection, {
     title,
     contents,
-    writer: 'admin',
+    uid,
     hits: 0,
     tags: ['서울', 'javascript'],
     rgt_dt: Timestamp.fromDate(new Date()),
@@ -56,6 +58,11 @@ const signIn = async (email, password) => {
   return signInPromise;
 };
 
+const logout = async () => {
+  const logOutPromise = await signOut(auth);
+  return logOutPromise;
+};
+
 export {
   fetchData,
   setData,
@@ -63,4 +70,5 @@ export {
   deleteData,
   createUser,
   signIn,
+  logout,
 };

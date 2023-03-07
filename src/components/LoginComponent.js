@@ -1,6 +1,28 @@
-import createElement from '../util/util';
+import { createElement, authErrorMessage } from '../utils/util';
+import { signIn } from '../../api/firebase';
 
-const Login = () => {
+const handleClickLogin = (event, render) => {
+  event.preventDefault();
+  const $email = document.querySelector('#email');
+  const $password = document.querySelector('#password');
+  const $errorMessage = document.querySelector('.error-message');
+
+  const email = $email.value;
+  const password = $password.value;
+
+  signIn(email, password)
+    .then(() => {
+      const path = event.target.getAttribute('href');
+      if (window.location.pathname === path) return;
+      window.history.pushState(null, null, path);
+      render(path);
+    })
+    .catch((error) => {
+      $errorMessage.innerHTML = authErrorMessage[error.code];
+    });
+};
+
+const Login = (render) => {
   const $login = createElement('form', '', 'user-form');
   const $loginTitle = createElement('h1', '로그인', 'user-title');
   const $loginEmail = createElement(
@@ -20,22 +42,24 @@ const Login = () => {
     'user-form-input',
   );
   const $loginError = createElement('div', '', 'error-message');
-  const $loginButton = createElement(
+  const $loginButtonContainer = createElement(
     'div',
     `
       <button type="submit">
-        <a href="/" class="login-button">로그인</a>
+        <a href="/" id="login-button">로그인</a>
       </button>
     `,
     'user-form-button',
   );
+  const $loginButton = $loginButtonContainer.querySelector('#login-button');
+  $loginButton.addEventListener('click', (event) => { handleClickLogin(event, render); });
 
   $login.append(
     $loginTitle,
     $loginEmail,
     $loginPassword,
     $loginError,
-    $loginButton,
+    $loginButtonContainer,
   );
 
   return $login;
