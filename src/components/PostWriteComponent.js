@@ -62,7 +62,7 @@ const PostWrite = (render) => {
     'div',
     `
       <a href="/" id="post-register-button">등록</a>
-      <a href="/" class="post-cancel-button">취소</a>
+      <a href="/" class="post-cancel-button" data-link>취소</a>
     `,
     'post-button',
   );
