@@ -26,6 +26,8 @@ const fetchData = async () => {
 };
 
 const getData = async (id) => {
+  if (!id) throw new Error('유효하지 않은 URL입니다.');
+
   const post = await getDoc(doc(db, 'post', id));
   return post;
 };

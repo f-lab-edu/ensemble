@@ -7,6 +7,8 @@ const PostView = () => {
 
   getData(id)
     .then((post) => {
+      if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
+
       const {
         title, contents, writer, contentDate,
       } = post.data();
