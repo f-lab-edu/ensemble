@@ -6,6 +6,8 @@ import NotFound from './components/NotFoundComponent';
 import Signup from './components/SignupComponent';
 import Login from './components/LoginComponent';
 
+import '../main.css';
+
 import { createElement } from './utils/util';
 
 const $app = document.querySelector('#app');

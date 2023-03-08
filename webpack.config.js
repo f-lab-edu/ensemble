@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 
@@ -14,14 +13,13 @@ module.exports = {
     main: './src/main.js',
   },
   output: {
+    publicPath: '/',
     path: path.resolve('./dist'),
     filename: '[name].min.js',
   },
   devServer: {
     liveReload: true,
-    historyApiFallback: {
-      disableDotRule: true,
-    },
+    historyApiFallback: true,
   },
   optimization: {
     minimizer:
@@ -55,15 +53,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      filename: 'index.html',
-      excludeChunks: ['dashboard'],
       minify:
         process.env.NODE_ENV === 'production'
           ? {
@@ -73,14 +69,7 @@ module.exports = {
           : false,
     }),
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: './main.css', to: './main.css' },
-      ],
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
+    new MiniCssExtractPlugin({ filename: '[name].css' }),
     new Dotenv(),
   ],
 };
