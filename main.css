@@ -4,6 +4,13 @@ article, aside, figure, footer, header, hgroup, section {
 ol, ul {
   list-style: none;
 }
+button {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background-color: transparent;
+}
 header {
   position: sticky;
   width: 100%;
@@ -53,7 +60,6 @@ nav {
   margin-right: 2rem;
   font-size: 1.3rem;
 }
-
 .post-list ul {
   display: flex;
   flex-wrap: wrap;
@@ -91,29 +97,24 @@ nav {
   height: 42px;
   line-height: 2.5;
 }
-
 .post-cancel-button {
   color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(206, 212, 218);
 }
-
 .post-cancel-button:hover {
   color: rgb(0, 0, 0);
   background-color: rgb(241, 243, 245);
   border: 1px solid rgb(206, 212, 218);
 }
-
-.post-register-button {
+#post-register-button {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 196, 113);
 }
-
-.post-register-button:hover {
+#post-register-button:hover {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 167, 96);
 }
-
 .post-contents-input {
   width: 100%;
 	height: 200px;
@@ -124,3 +125,56 @@ nav {
 	font-size: 16px;
 	resize: both;
 }
+.error-message {
+  font-size: 1rem;
+  color: rgb(255,0,0);
+  font-weight: 700;
+}
+.user-title{
+  text-align: center;
+}
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user-form-input {
+  display: flex;
+  flex-direction:column;
+  margin: 10px 0;
+}
+.user-form-input input {
+  appearance: none;
+  margin-top: 4px;
+  width: 320px;
+  padding: 13px 12px;
+  height: 20px;
+  font-size: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: #fff;
+}
+.user-form-button {
+  margin-top: 16px;
+}
+.user-form-button a {
+  border-color: #00c471;
+  font-weight: 700;
+  background-color: #00c471;
+  border: 1px solid;
+  color: #fff;
+  cursor: pointer;
+  appearance: none;
+  width: 346px;
+  height: 48px;
+  font-size: 15px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+.post-view-contents {
+  padding: 16px 0
+}
+
