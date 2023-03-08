@@ -23,8 +23,13 @@ const formatPostDate = (date, number) => {
   return fostDate;
 };
 
+const KR_TIME_ZONE_DIFF = 9 * 60 * 60 * 1000;
+
+const formatPostCreateDate = (date) => new Date(date.getTime() + KR_TIME_ZONE_DIFF).toISOString().replace('T', ' ').slice(0, -5);
+
 export {
   createElement,
   formatPostDate,
+  formatPostCreateDate,
   authErrorMessage,
 };
