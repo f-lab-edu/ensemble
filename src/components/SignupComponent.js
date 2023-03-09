@@ -1,4 +1,4 @@
-import { createElement, authErrorMessage } from '../utils/util';
+import { createElement, authErrorMessage, navigateTo } from '../utils/util';
 import { createUser } from '../../api/firebase';
 
 const handleClickSignUp = (event, render) => {
@@ -22,8 +22,7 @@ const handleClickSignUp = (event, render) => {
     .then(() => {
       const path = event.target.getAttribute('href');
       if (window.location.pathname === path) return;
-      window.history.pushState(null, null, path);
-      render(path);
+      navigateTo(path, render);
     })
     .catch((error) => {
       $errorMessage.innerHTML = authErrorMessage[error.code];

@@ -1,13 +1,13 @@
 import selectUser from '../utils/indexedDB';
-import { createElement } from '../utils/util';
+import { createElement, navigateTo } from '../utils/util';
 import { logout } from '../../api/firebase';
 
 const handleClickLogout = (event, render) => {
   event.preventDefault();
   logout();
+
   const path = event.target.getAttribute('href');
-  window.history.pushState(null, null, path);
-  render(path);
+  navigateTo(path, render);
 };
 
 const Header = async (render) => {

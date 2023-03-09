@@ -1,8 +1,16 @@
 import selectUser from '../utils/indexedDB';
-import { createElement } from '../utils/util';
+import { createElement, navigateTo } from '../utils/util';
 import { fetchData } from '../../api/firebase';
 
-const Post = () => {
+const handleClickPost = (event, render) => {
+  event.preventDefault();
+
+  const path = event.currentTarget.getAttribute('href');
+  if (window.location.pathname === path) return;
+  navigateTo(path, render);
+};
+
+const Post = (render) => {
   const $post = createElement('div');
   const $headerSection = createElement('section', '', 'community-header');
   selectUser()
@@ -29,13 +37,15 @@ const Post = () => {
         const $li = createElement(
           'li',
           `
-            <a>
+            <a href="/postview/${post.id}">
               <div class="post-title">${title}</div>
               <div class="post-body">${contents}</div>
             </a>
           `,
           'post-container',
         );
+        const $a = $li.querySelector('a');
+        $a.addEventListener('click', (event) => { handleClickPost(event, render); });
         $ul.append($li);
       });
       $postSection.append($ul);

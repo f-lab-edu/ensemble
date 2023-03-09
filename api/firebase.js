@@ -3,7 +3,7 @@ import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
 } from 'firebase/auth';
 import {
-  getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, Timestamp,
+  getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, deleteDoc, Timestamp,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -25,14 +25,22 @@ const fetchData = async () => {
   return posts;
 };
 
-const setData = async (title, contents, date, uid) => {
+const getData = async (id) => {
+  if (!id) throw new Error('유효하지 않은 URL입니다.');
+
+  const post = await getDoc(doc(db, 'post', id));
+  return post;
+};
+
+const setData = async (title, contents, date, writer, uid) => {
   await addDoc(postCollection, {
     title,
     contents,
+    writer,
     uid,
     hits: 0,
     tags: ['서울', 'javascript'],
-    rgt_dt: Timestamp.fromDate(new Date()),
+    contentDate: Timestamp.fromDate(new Date()),
     deadline: Timestamp.fromDate(new Date(date)),
   });
 };
@@ -45,7 +53,8 @@ const updateData = async (id) => {
 };
 
 const deleteData = async (id) => {
-  await deleteDoc(doc(db, 'post', id));
+  const deletePromise = await deleteDoc(doc(db, 'post', id));
+  return deletePromise;
 };
 
 const createUser = async (email, password) => {
@@ -65,6 +74,7 @@ const logout = async () => {
 
 export {
   fetchData,
+  getData,
   setData,
   updateData,
   deleteData,

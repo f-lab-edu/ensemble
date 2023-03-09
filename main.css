@@ -107,13 +107,25 @@ nav {
   background-color: rgb(241, 243, 245);
   border: 1px solid rgb(206, 212, 218);
 }
-#post-register-button {
+#post-register-button, 
+#post-edit-button {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 196, 113);
 }
-#post-register-button:hover {
+#post-register-button:hover,
+#post-edit-button:hover {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 167, 96);
+}
+#post-delete-button
+{
+  color: rgb(255, 255, 255);
+  background-color: rgb(230, 77, 50);
+}
+#post-delete-button:hover
+{
+  color: rgb(255, 255, 255);
+  background-color: rgb(228, 61, 32);
 }
 .post-contents-input {
   width: 100%;
@@ -173,4 +185,7 @@ nav {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+}
+.post-view-contents {
+  padding: 16px 0
 }
