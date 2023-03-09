@@ -25,10 +25,10 @@ const fetchData = async () => {
   return posts;
 };
 
-const getData = async (id) => {
-  if (!id) throw new Error('유효하지 않은 URL입니다.');
+const getData = async (postId) => {
+  if (!postId) throw new Error('유효하지 않은 URL입니다.');
 
-  const post = await getDoc(doc(db, 'post', id));
+  const post = await getDoc(doc(db, 'post', postId));
   return post;
 };
 
@@ -45,15 +45,18 @@ const setData = async (title, contents, date, writer, uid) => {
   });
 };
 
-const updateData = async (id) => {
-  const data = doc(db, 'post', id);
-  await updateDoc(data, {
-    title: '안녕하세요',
+const updateData = async (postId, title, contents, deadline) => {
+  const data = doc(db, 'post', postId);
+  const updatePromise = await updateDoc(data, {
+    title,
+    contents,
+    deadline: Timestamp.fromDate(new Date(deadline)),
   });
+  return updatePromise;
 };
 
-const deleteData = async (id) => {
-  const deletePromise = await deleteDoc(doc(db, 'post', id));
+const deleteData = async (postId) => {
+  const deletePromise = await deleteDoc(doc(db, 'post', postId));
   return deletePromise;
 };
 

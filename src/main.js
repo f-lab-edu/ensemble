@@ -2,6 +2,7 @@ import Header from './components/HeaderComponent';
 import Post from './components/PostComponent';
 import PostWrite from './components/PostWriteComponent';
 import PostView from './components/PostViewComponent';
+import PostEdit from './components/PostEditComponent';
 import NotFound from './components/NotFoundComponent';
 import Signup from './components/SignupComponent';
 import Login from './components/LoginComponent';
@@ -19,6 +20,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
   { path: '/postview', component: PostView },
+  { path: '/postedit', component: PostEdit },
 ];
 
 const render = async (path) => {

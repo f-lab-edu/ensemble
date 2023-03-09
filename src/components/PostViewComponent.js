@@ -57,7 +57,7 @@ const PostView = (render) => {
       if (user && user.value.uid === uid) {
         $postViewButtonContainer.innerHTML = `
           <a href="/" id="post-delete-button">삭제</a>
-          <a href="/edit/${postId}" id="post-edit-button">수정</a>
+          <a href="/postedit/${postId}" id="post-edit-button">수정</a>
         `;
         const $postDeleteButton = $postViewButtonContainer.querySelector('#post-delete-button');
         $postDeleteButton.addEventListener('click', (event) => handleClickDelete(event, render, postId));
