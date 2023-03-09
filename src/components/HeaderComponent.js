@@ -5,6 +5,7 @@ import { logout } from '../../api/firebase';
 const handleClickLogout = (event, render) => {
   event.preventDefault();
   logout();
+
   const path = event.target.getAttribute('href');
   navigateTo(path, render);
 };

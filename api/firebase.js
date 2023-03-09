@@ -31,6 +31,7 @@ const getData = async (id) => {
   const post = await getDoc(doc(db, 'post', id));
   return post;
 };
+
 const setData = async (title, contents, date, writer, uid) => {
   await addDoc(postCollection, {
     title,
@@ -52,7 +53,8 @@ const updateData = async (id) => {
 };
 
 const deleteData = async (id) => {
-  await deleteDoc(doc(db, 'post', id));
+  const deletePromise = await deleteDoc(doc(db, 'post', id));
+  return deletePromise;
 };
 
 const createUser = async (email, password) => {

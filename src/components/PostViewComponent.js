@@ -1,16 +1,36 @@
-import { createElement, formatPostCreateDate } from '../utils/util';
-import { getData } from '../../api/firebase';
+import { createElement, formatPostCreateDate, navigateTo } from '../utils/util';
+import { getData, deleteData } from '../../api/firebase';
+import selectUser from '../utils/indexedDB';
 
-const PostView = () => {
+const handleClickEdit = (event, render) => {
+  event.preventDefault();
+
+  const path = event.target.getAttribute('href');
+  if (window.location.pathname === path) return;
+  navigateTo(path, render);
+};
+
+const handleClickDelete = (event, render, postId) => {
+  event.preventDefault();
+
+  deleteData(postId)
+    .then(() => {
+      const path = event.target.getAttribute('href');
+      if (window.location.pathname === path) return;
+      navigateTo(path, render);
+    });
+};
+
+const PostView = (render) => {
   const $postView = createElement('div');
-  const id = window.location.pathname.split('/').slice(-1)[0];
+  const postId = window.location.pathname.split('/').slice(-1)[0];
 
-  getData(id)
-    .then((post) => {
+  getData(postId)
+    .then(async (post) => {
       if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
 
       const {
-        title, contents, writer, contentDate,
+        title, contents, writer, contentDate, uid,
       } = post.data();
       const $postViewHeader = createElement('div', '', 'post-view-header');
       const $postViewTitle = createElement('h1', `${title}`, 'post-view-title');
@@ -31,9 +51,25 @@ const PostView = () => {
         `,
         'post-view-contents',
       );
+
+      const $postViewButtonContainer = createElement('div', '', 'post-button');
+      const user = await selectUser();
+      if (user && user.value.uid === uid) {
+        $postViewButtonContainer.innerHTML = `
+          <a href="/" id="post-delete-button">삭제</a>
+          <a href="/edit/${postId}" id="post-edit-button">수정</a>
+        `;
+        const $postDeleteButton = $postViewButtonContainer.querySelector('#post-delete-button');
+        $postDeleteButton.addEventListener('click', (event) => handleClickDelete(event, render, postId));
+
+        const $postEditButton = $postViewButtonContainer.querySelector('#post-edit-button');
+        $postEditButton.addEventListener('click', (event) => handleClickEdit(event, render));
+      }
+
       $postView.append(
         $postViewHeader,
         $postViewContents,
+        $postViewButtonContainer,
       );
     })
     .catch((error) => {
