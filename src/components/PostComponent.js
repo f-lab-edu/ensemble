@@ -1,5 +1,5 @@
 import selectUser from '../utils/indexedDB';
-import { createElement } from '../utils/util';
+import { createElement, navigateTo } from '../utils/util';
 import { fetchData } from '../../api/firebase';
 
 const handleClickPost = (event, render) => {
@@ -7,8 +7,7 @@ const handleClickPost = (event, render) => {
 
   const path = event.currentTarget.getAttribute('href');
   if (window.location.pathname === path) return;
-  window.history.pushState(null, null, path);
-  render(path);
+  navigateTo(path, render);
 };
 
 const Post = (render) => {

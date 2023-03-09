@@ -1,4 +1,4 @@
-import { createElement, authErrorMessage } from '../utils/util';
+import { createElement, authErrorMessage, navigateTo } from '../utils/util';
 import { signIn } from '../../api/firebase';
 
 const handleClickLogin = (event, render) => {
@@ -14,8 +14,7 @@ const handleClickLogin = (event, render) => {
     .then(() => {
       const path = event.target.getAttribute('href');
       if (window.location.pathname === path) return;
-      window.history.pushState(null, null, path);
-      render(path);
+      navigateTo(path, render);
     })
     .catch((error) => {
       $errorMessage.innerHTML = authErrorMessage[error.code];

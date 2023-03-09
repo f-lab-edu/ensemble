@@ -1,5 +1,5 @@
 import selectUser from '../utils/indexedDB';
-import { createElement, formatPostDate } from '../utils/util';
+import { createElement, formatPostDate, navigateTo } from '../utils/util';
 import { setData } from '../../api/firebase';
 
 const handleClickRegisterPost = (event, render) => {
@@ -30,8 +30,7 @@ const handleClickRegisterPost = (event, render) => {
 
   const path = event.target.getAttribute('href');
   if (window.location.pathname === path) return;
-  window.history.pushState(null, null, path);
-  render(path);
+  navigateTo(path, render);
 };
 
 const PostWrite = (render) => {

@@ -13,7 +13,7 @@ module.exports = {
     main: './src/main.js',
   },
   output: {
-    publicPath: '/',
+    publicPath: webpackMode === 'production' ? '/ensemble/' : '/',
     path: path.resolve('./dist'),
     filename: '[name].min.js',
   },

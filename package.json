@@ -8,7 +8,7 @@
     "lint": "eslint --ext js",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "start": "webpack serve --progress",
-    "predeploy": "npm run build && cp 404.html ./dist",
+    "predeploy": "npm run build && cp ./dist/index.html ./dist/404.html",
     "deploy": "gh-pages -d dist"
   },
   "repository": {

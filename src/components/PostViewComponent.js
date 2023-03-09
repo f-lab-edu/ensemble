@@ -3,7 +3,7 @@ import { getData } from '../../api/firebase';
 
 const PostView = () => {
   const $postView = createElement('div');
-  const id = window.location.pathname.split('/')[2];
+  const id = window.location.pathname.split('/').slice(-1)[0];
 
   getData(id)
     .then((post) => {

@@ -8,9 +8,10 @@ import Login from './components/LoginComponent';
 
 import '../main.css';
 
-import { createElement } from './utils/util';
+import { createElement, navigateTo } from './utils/util';
 
 const $app = document.querySelector('#app');
+const BASE_URL = '/ensemble';
 
 const routes = [
   { path: '/', component: Post },
@@ -21,7 +22,7 @@ const routes = [
 ];
 
 const render = async (path) => {
-  const _path = path ?? window.location.pathname;
+  const _path = path ?? window.location.pathname.replace(BASE_URL, '');
   try {
     const $header = await Header(render);
     const $main = createElement('main');
@@ -38,11 +39,11 @@ const render = async (path) => {
 
 const handleClickRouter = (event) => {
   if (!event.target.matches('[data-link]')) return;
+  event.preventDefault();
 
   const path = event.target.getAttribute('href');
   if (window.location.pathname === path) return;
-  window.history.pushState(null, null, path);
-  render(path);
+  navigateTo(path, render);
 };
 
 $app.addEventListener('click', handleClickRouter);
