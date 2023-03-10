@@ -1,5 +1,6 @@
 import { createElement, navigateTo, formatPostDate } from '../utils/util';
 import { getData, updateData } from '../../api/firebase';
+import selectUser from '../utils/indexedDB';
 
 const handleClickEdit = (event, render, postId) => {
   event.preventDefault();
@@ -40,17 +41,19 @@ const handleClickEditCancel = (event, render) => {
 
 const PostEdit = (render) => {
   const postId = window.location.pathname.split('/').slice(-1)[0];
-  const today = new Date();
+  if (!postId) throw new Error('유효하지 않은 URL입니다.');
 
+  const today = new Date();
   const $postEdit = createElement('div');
 
   getData(postId)
-    .then((post) => {
+    .then(async (post) => {
       if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
-
+      const user = await selectUser();
       const {
-        title, contents, deadline,
+        title, contents, deadline, uid,
       } = post.data();
+      if (user.value.uid !== uid) throw new Error('접근권한이 없습니다.');
 
       const $postTitleEdit = createElement(
         'div',

@@ -24,6 +24,7 @@ const handleClickDelete = (event, render, postId) => {
 const PostView = (render) => {
   const $postView = createElement('div');
   const postId = window.location.pathname.split('/').slice(-1)[0];
+  if (!postId) throw new Error('유효하지 않은 URL입니다.');
 
   getData(postId)
     .then(async (post) => {
