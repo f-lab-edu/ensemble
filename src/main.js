@@ -16,20 +16,21 @@ const BASE_URL = '/ensemble';
 
 const routes = [
   { path: '/', component: Post },
-  { path: '/postwrite', component: PostWrite },
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
-  { path: '/postview', component: PostView },
-  { path: '/postedit', component: PostEdit },
+  { path: '/post/view', component: PostView },
+  { path: '/post/write', component: PostWrite },
+  { path: '/post/edit', component: PostEdit },
 ];
 
 const render = async (path) => {
+  const postIdRegExp = /\/\w{20}/g;
   const _path = path ?? window.location.pathname.replace(BASE_URL, '');
   try {
     const $header = await Header(render);
     const $main = createElement('main');
     const component = _path.split('/').length - 1 > 1
-      ? routes.find((route) => route.path === `/${_path.split('/')[1]}`)?.component || NotFound
+      ? routes.find((route) => route.path === _path.replace(postIdRegExp, ''))?.component || NotFound
       : routes.find((route) => route.path === _path)?.component || NotFound;
     $main.append(component(render));
 

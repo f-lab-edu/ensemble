@@ -85,8 +85,8 @@ const PostEdit = (render) => {
       const $postEditButtonContainer = createElement(
         'div',
         `
-          <a href="/postview/${postId}" class="post-cancel-button" id="post-edit-cancel">취소</a>
-          <a href="/postview/${postId}" id="post-edit-button">수정</a>
+          <a href="/post/view/${postId}" class="post-cancel-button" id="post-edit-cancel">취소</a>
+          <a href="/post/view/${postId}" id="post-edit-button">수정</a>
         `,
         'post-button',
       );
