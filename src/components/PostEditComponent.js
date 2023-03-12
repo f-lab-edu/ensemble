@@ -39,74 +39,68 @@ const handleClickEditCancel = (event, render) => {
   navigateTo(path, render);
 };
 
-const PostEdit = (render) => {
+const PostEdit = async (render) => {
+  const $postEdit = createElement('div');
   const postId = window.location.pathname.split('/').slice(-1)[0];
-  if (!postId) throw new Error('유효하지 않은 URL입니다.');
 
   const today = new Date();
-  const $postEdit = createElement('div');
+  const post = await getData(postId);
+  if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
 
-  getData(postId)
-    .then(async (post) => {
-      if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
-      const user = await selectUser();
-      const {
-        title, contents, deadline, uid,
-      } = post.data();
-      if (user.value.uid !== uid) throw new Error('접근권한이 없습니다.');
+  const user = await selectUser();
+  const {
+    title, contents, deadline, uid,
+  } = post.data();
+  if (user.value.uid !== uid) throw new Error('접근권한이 없습니다.');
 
-      const $postTitleEdit = createElement(
-        'div',
-        `
-          <input 
-            type="text" 
-            class="post-title-input" 
-            placeholder="제목을 입력해주세요."
-            value="${title}"
-          />
-        `,
-      );
-      const $postDateEdit = createElement(
-        'div',
-        `
-          마감일: <input 
-            type="date"
-            class="post-date-input"
-            value="${formatPostDate(deadline.toDate())}"
-            min="${formatPostDate(today, 1)}"
-          />
-        `,
-      );
-      const $postContentEdit = createElement(
-        'div',
-        `<textarea class="post-contents-input">${contents}</textarea>`,
-      );
-      const $errorMessage = createElement('div', '', 'error-message');
-      const $postEditButtonContainer = createElement(
-        'div',
-        `
-          <a href="/post/view/${postId}" class="post-cancel-button" id="post-edit-cancel">취소</a>
-          <a href="/post/view/${postId}" id="post-edit-button">수정</a>
-        `,
-        'post-button',
-      );
-      const $postEditButton = $postEditButtonContainer.querySelector('#post-edit-button');
-      $postEditButton.addEventListener('click', (event) => handleClickEdit(event, render, postId));
+  const $postTitleEdit = createElement(
+    'div',
+    `
+      <input 
+        type="text" 
+        class="post-title-input" 
+        placeholder="제목을 입력해주세요."
+        value="${title}"
+      />
+    `,
+  );
+  const $postDateEdit = createElement(
+    'div',
+    `
+      마감일: <input 
+        type="date"
+        class="post-date-input"
+        value="${formatPostDate(deadline.toDate())}"
+        min="${formatPostDate(today, 1)}"
+      />
+    `,
+  );
+  const $postContentEdit = createElement(
+    'div',
+    `<textarea class="post-contents-input">${contents}</textarea>`,
+  );
+  const $errorMessage = createElement('div', '', 'error-message');
+  const $postEditButtonContainer = createElement(
+    'div',
+    `
+      <a href="/post/view/${postId}" class="post-cancel-button" id="post-edit-cancel">취소</a>
+      <a href="/post/view/${postId}" class="green-btn" id="post-edit-button">수정</a>
+    `,
+    'post-button',
+  );
+  const $postEditButton = $postEditButtonContainer.querySelector('#post-edit-button');
+  $postEditButton.addEventListener('click', (event) => handleClickEdit(event, render, postId));
 
-      const $postEditCancelButton = $postEditButtonContainer.querySelector('#post-edit-cancel');
-      $postEditCancelButton.addEventListener('click', (event) => handleClickEditCancel(event, render));
+  const $postEditCancelButton = $postEditButtonContainer.querySelector('#post-edit-cancel');
+  $postEditCancelButton.addEventListener('click', (event) => handleClickEditCancel(event, render));
 
-      $postEdit.append(
-        $postTitleEdit,
-        $postDateEdit,
-        $postContentEdit,
-        $errorMessage,
-        $postEditButtonContainer,
-      );
-    })
-    .catch((error) => {
-      $postEdit.append(document.createTextNode(error));
-    });
+  $postEdit.append(
+    $postTitleEdit,
+    $postDateEdit,
+    $postContentEdit,
+    $errorMessage,
+    $postEditButtonContainer,
+  );
 
   return $postEdit;
 };

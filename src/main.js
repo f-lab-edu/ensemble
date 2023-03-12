@@ -13,6 +13,7 @@ import { createElement, navigateTo } from './utils/util';
 
 const $app = document.querySelector('#app');
 const BASE_URL = '/ensemble';
+const postIdRegExp = /\/\w{20}/g;
 
 const routes = [
   { path: '/', component: Post },
@@ -24,19 +25,17 @@ const routes = [
 ];
 
 const render = async (path) => {
-  const postIdRegExp = /\/\w{20}/g;
   const _path = path ?? window.location.pathname.replace(BASE_URL, '');
   try {
     const $header = await Header(render);
     const $main = createElement('main');
-    const component = _path.split('/').length - 1 > 1
-      ? routes.find((route) => route.path === _path.replace(postIdRegExp, ''))?.component || NotFound
-      : routes.find((route) => route.path === _path)?.component || NotFound;
-    $main.append(component(render));
+    const component = routes.find((route) => route.path === _path.replace(postIdRegExp, ''))?.component;
+    if (!component) throw Error('유효하지 않은 URL입니다');
 
+    $main.append(await component(render));
     $app.replaceChildren($header, $main);
   } catch (error) {
-    $app.replaceChildren(NotFound(error));
+    $app.replaceChildren(NotFound(render, error));
   }
 };
 
