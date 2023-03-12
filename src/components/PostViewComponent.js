@@ -1,6 +1,7 @@
 import { createElement, formatPostCreateDate, navigateTo } from '../utils/util';
-import { getData, deleteData } from '../../api/firebase';
+import { getData } from '../../api/firebase';
 import selectUser from '../utils/indexedDB';
+import Modal from './ModalComponent';
 
 const handleClickEdit = (event, render) => {
   event.preventDefault();
@@ -12,13 +13,8 @@ const handleClickEdit = (event, render) => {
 
 const handleClickDelete = (event, render, postId) => {
   event.preventDefault();
-
-  deleteData(postId)
-    .then(() => {
-      const path = event.target.getAttribute('href');
-      if (window.location.pathname === path) return;
-      navigateTo(path, render);
-    });
+  const $app = document.querySelector('#app');
+  $app.append(Modal(render, postId));
 };
 
 const PostView = async (render) => {
