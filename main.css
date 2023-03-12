@@ -107,23 +107,19 @@ nav {
   background-color: rgb(241, 243, 245);
   border: 1px solid rgb(206, 212, 218);
 }
-#post-register-button, 
-#post-edit-button {
+.green-btn{
   color: rgb(255, 255, 255);
   background-color: rgb(0, 196, 113);
 }
-#post-register-button:hover,
-#post-edit-button:hover {
+.green-btn:hover {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 167, 96);
 }
-#post-delete-button
-{
+#post-delete-button {
   color: rgb(255, 255, 255);
   background-color: rgb(230, 77, 50);
 }
-#post-delete-button:hover
-{
+#post-delete-button:hover {
   color: rgb(255, 255, 255);
   background-color: rgb(228, 61, 32);
 }
@@ -188,5 +184,36 @@ nav {
 }
 .post-view-contents {
   padding: 16px 0
+}
+.popup-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 2px solid #000;
+  width: 500px;
+  height: 500px;
+  font-size: 20px;
+}
+.not-found-container {
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+.not-found-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.not-found-button a {
+  margin: 0 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0px 22px;
+  height: 42px;
+  line-height: 2.5;
 }
 
