@@ -29,7 +29,6 @@ const handleClickRegisterPost = (event, render) => {
     });
 
   const path = event.target.getAttribute('href');
-  if (window.location.pathname === path) return;
   navigateTo(path, render);
 };
 

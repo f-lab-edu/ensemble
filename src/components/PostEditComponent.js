@@ -26,7 +26,6 @@ const handleClickEdit = (event, render, postId) => {
   updateData(postId, title, contents, date)
     .then(() => {
       const path = event.target.getAttribute('href');
-      if (window.location.pathname === path) return;
       navigateTo(path, render);
     });
 };
@@ -35,7 +34,6 @@ const handleClickEditCancel = (event, render) => {
   event.preventDefault();
 
   const path = event.target.getAttribute('href');
-  if (window.location.pathname === path) return;
   navigateTo(path, render);
 };
 

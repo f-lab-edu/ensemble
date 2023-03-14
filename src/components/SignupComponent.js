@@ -21,7 +21,6 @@ const handleClickSignUp = (event, render) => {
   createUser(email, password)
     .then(() => {
       const path = event.target.getAttribute('href');
-      if (window.location.pathname === path) return;
       navigateTo(path, render);
     })
     .catch((error) => {

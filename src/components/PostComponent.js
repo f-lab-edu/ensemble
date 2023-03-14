@@ -6,7 +6,6 @@ const handleClickPost = (event, render) => {
   event.preventDefault();
 
   const path = event.currentTarget.getAttribute('href');
-  if (window.location.pathname === path) return;
   navigateTo(path, render);
 };
 
