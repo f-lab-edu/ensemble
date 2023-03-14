@@ -87,6 +87,56 @@ const logout = async () => {
   return logOutPromise;
 };
 
+const applyStudy = async (postId, applicants, email) => {
+  const data = doc(db, 'post', postId);
+  const applyPromise = await updateDoc(data, {
+    applicants: [...applicants, { email, status: 'pending' }],
+  });
+  return applyPromise;
+};
+
+const cancelSutdy = async (postId, applicants, email) => {
+  const data = doc(db, 'post', postId);
+  const cancelPromise = await updateDoc(data, {
+    applicants: applicants.filter((applicant) => applicant.email !== email),
+  });
+  return cancelPromise;
+};
+
+const acceptApplicant = async (postId, email) => {
+  const data = doc(db, 'post', postId);
+  const { applicant, applicants } = (await getDoc(data)).data();
+  const modifiedApplicants = applicants.map((application) => {
+    if (application.email === email) {
+      return Object.assign(application, { status: 'accept' });
+    }
+    return application;
+  });
+  const acceptPromise = await updateDoc(data, {
+    applicant: applicant + 1,
+    applicants: modifiedApplicants,
+  });
+
+  return acceptPromise;
+};
+
+const cancelApplicant = async (postId, email) => {
+  const data = doc(db, 'post', postId);
+  const { applicant, applicants } = (await getDoc(data)).data();
+  const modifiedApplicants = applicants.map((application) => {
+    if (application.email === email) {
+      return Object.assign(application, { status: 'pending' });
+    }
+    return application;
+  });
+  const cancelPromise = await updateDoc(data, {
+    applicant: applicant - 1,
+    applicants: modifiedApplicants,
+  });
+
+  return cancelPromise;
+};
+
 export {
   fetchData,
   getData,
@@ -96,4 +146,8 @@ export {
   createUser,
   signIn,
   logout,
+  applyStudy,
+  cancelSutdy,
+  acceptApplicant,
+  cancelApplicant,
 };

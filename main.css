@@ -314,3 +314,44 @@ nav {
   color: #fff;
   background-color: #1dc078;
 }
+.applications-button {
+  display: flex;
+  justify-content: end;
+}
+.applications-button a{
+  margin: 0 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0px 22px;
+  height: 42px;
+  line-height: 2.5;
+}
+.applicants-container {
+  z-index: 11;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  width: 377px;
+  height: 457px;
+  border-radius: 4px;
+}
+.modal-content{
+  display: flex;
+  flex-direction: column;
+}
+.modal-content div {
+  margin: 0.5rem 1rem;
+}
+.applicant {
+  display: flex;
+}
+.applicant a {
+  font-weight: 700;
+  border-radius: 50rem;
+  font-size: 1rem;
+  padding: 0.35em 0.65em;
+}

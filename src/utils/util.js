@@ -11,6 +11,8 @@ const today = new Date();
 
 const isProductionMode = window.location.host === 'f-lab-edu.github.io';
 
+const isApply = (applicants, email) => applicants.some((applicant) => applicant.email === email);
+
 const isDeadlineDate = (date, applicant, recruitment) => {
   if (today > date) return true;
   if (applicant === recruitment || applicant > recruitment) return true;
@@ -53,6 +55,6 @@ export {
   formatPostCreateDate,
   authErrorMessage,
   navigateTo,
-  isProductionMode as IsProductionMode,
   isDeadlineDate,
+  isApply,
 };

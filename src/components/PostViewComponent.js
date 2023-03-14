@@ -1,24 +1,17 @@
-import Modal from './ModalComponent';
+import PostViewButtons from './PostViewButtonsComponent';
 import RecruitmentStatus from './RecruitmentStatusComponent';
+import ApplicantsModal from './ApplicantsModalComponent';
 
 import {
-  createElement, formatPostCreateDate, navigateTo, isDeadlineDate,
+  createElement, formatPostCreateDate, isDeadlineDate,
 } from '../utils/util';
 import { getData } from '../../api/firebase';
 import selectUser from '../utils/indexedDB';
 
-const handleClickEdit = (event, render) => {
+const handleClickApplications = (event, render, postId, applicants) => {
   event.preventDefault();
 
-  const path = event.target.getAttribute('href');
-  navigateTo(path, render);
-};
-
-const handleClickDelete = (event, render, postId) => {
-  event.preventDefault();
-
-  const $app = document.querySelector('#app');
-  $app.append(Modal(render, postId));
+  document.body.append(ApplicantsModal(render, postId, applicants));
 };
 
 const PostView = async (render) => {
@@ -29,7 +22,7 @@ const PostView = async (render) => {
   if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
 
   const {
-    title, contents, writer, contentDate, deadline, applicant, recruitment, uid,
+    title, contents, writer, contentDate, deadline, applicant, recruitment, applicants, uid,
   } = post.data();
   const checkDeadline = isDeadlineDate(deadline.toDate(), applicant, recruitment);
   const $postViewHeader = createElement('div', '', 'post-view-header');
@@ -46,6 +39,18 @@ const PostView = async (render) => {
   );
   $postViewSubTitle.append(RecruitmentStatus(checkDeadline));
 
+  const user = await selectUser();
+  if (user && user.value.uid === uid) {
+    const $applicationButtons = createElement(
+      'div',
+      '<a id="applicants-view-button" class="blue-btn">신청 리스트</a>',
+      'applications-button',
+    );
+    const $applicationListButton = $applicationButtons.querySelector('#applicants-view-button');
+    $applicationListButton.addEventListener('click', (event) => handleClickApplications(event, render, postId, applicants));
+    $postViewSubTitle.append($applicationButtons);
+  }
+
   $postViewHeader.append($postViewTitle, $postViewSubTitle);
   const $postViewContents = createElement(
     'div',
@@ -56,25 +61,21 @@ const PostView = async (render) => {
     'post-view-contents',
   );
 
-  const $postViewButtonContainer = createElement('div', '', 'post-button');
-  const user = await selectUser();
-  if (user && user.value.uid === uid) {
-    $postViewButtonContainer.innerHTML = `
-      <a href="/" class="red-btn" id="post-delete-button">삭제</a>
-      <a href="/post/edit/${postId}" class="green-btn" id="post-edit-button">수정</a>
-    `;
-    const $postDeleteButton = $postViewButtonContainer.querySelector('#post-delete-button');
-    $postDeleteButton.addEventListener('click', (event) => handleClickDelete(event, render, postId));
+  if (user) {
+    const $postViewButtonContainer = PostViewButtons(
+      render,
+      user,
+      uid,
+      postId,
+      applicants,
+      checkDeadline,
+    );
+    $postView.append($postViewHeader, $postViewContents, $postViewButtonContainer);
 
-    const $postEditButton = $postViewButtonContainer.querySelector('#post-edit-button');
-    $postEditButton.addEventListener('click', (event) => handleClickEdit(event, render));
+    return $postView;
   }
 
-  $postView.append(
-    $postViewHeader,
-    $postViewContents,
-    $postViewButtonContainer,
-  );
+  $postView.append($postViewHeader, $postViewContents);
 
   return $postView;
 };
