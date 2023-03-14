@@ -16,10 +16,10 @@ header {
   height: 5rem;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 2px 4px 0 hsla(0,0%,80.8%,.5);
-  padding: 0 60px;
   align-items: center;
   z-index: 9;
+  box-shadow: 0 2px 4px 0 hsla(0,0%,80.8%,.5);
+  padding: 0 60px;
 }
 a {
   color: inherit;
@@ -77,7 +77,7 @@ nav {
   border-radius: 4px;
   border: 2px solid rgb(206, 212, 218);
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
-  padding: 0.58em 0.78em;
+  padding: 0.58rem 0.78rem;
 }
 .post-container:hover {
   background: rgb(245, 245, 245);
@@ -340,10 +340,10 @@ nav {
   color: rgb(0, 0, 0);
   background-color: #fff;
 }
-.post-people-input {
+.post-recruitment-input {
   width: 40px;
 }
-.recruitements-status {
+.recruitement-status {
   display: inline-block;
   padding: 0.35em 0.65em;
   font-size: 0.75rem;
@@ -359,11 +359,11 @@ nav {
   color: #fff;
   background-color: #1dc078;
 }
-.application-buttons {
+.applications-button {
   display: flex;
   justify-content: end;
 }
-.application-buttons a{
+.applications-button a{
   margin: 0 1rem;
   border-radius: 8px;
   font-weight: 500;
@@ -389,7 +389,10 @@ nav {
   flex-direction: column;
 }
 .modal-content div {
-  margin: 0.5rem 0;
+  margin: 0.5rem 1rem;
+}
+.applicant {
+  display: flex;
 }
 .applicant a {
   font-weight: 700;
