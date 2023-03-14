@@ -6,12 +6,14 @@ const handleClickRegisterPost = (event, render) => {
   event.preventDefault();
   const $postTitle = document.querySelector('.post-title-input');
   const $postDate = document.querySelector('.post-date-input');
+  const $postRecruitement = document.querySelector('.post-recruitment-input');
   const $postContents = document.querySelector('.post-contents-input');
   const $errorMessage = document.querySelector('.error-message');
 
   const title = $postTitle.value;
   const contents = $postContents.value;
   const date = $postDate.value;
+  const recruitment = $postRecruitement.value || 1;
 
   if (!title) {
     $errorMessage.innerHTML = '제목을 입력해주세요.';
@@ -25,7 +27,7 @@ const handleClickRegisterPost = (event, render) => {
 
   selectUser()
     .then((user) => {
-      setData(title, contents, date, user.value.email, user.value.uid);
+      setData(title, contents, date, recruitment, user.value.email, user.value.uid);
     });
 
   const path = event.target.getAttribute('href');
@@ -51,6 +53,10 @@ const PostWrite = (render) => {
       />
     `,
   );
+  const $postRecruitmentInput = createElement(
+    'div',
+    '모집 인원: <input type="number" class="post-recruitment-input" min="1" value="1" />',
+  );
   const $postContentsInput = createElement(
     'div',
     '<textarea class="post-contents-input" />',
@@ -70,6 +76,7 @@ const PostWrite = (render) => {
   $postWrite.append(
     $postTitleInput,
     $postDateInput,
+    $postRecruitmentInput,
     $postContentsInput,
     $errorMessage,
     $postButton,

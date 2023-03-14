@@ -1,7 +1,11 @@
-import { createElement, formatPostCreateDate, navigateTo } from '../utils/util';
+import Modal from './ModalComponent';
+import RecruitmentStatus from './RecruitmentStatusComponent';
+
+import {
+  createElement, formatPostCreateDate, navigateTo, isDeadlineDate,
+} from '../utils/util';
 import { getData } from '../../api/firebase';
 import selectUser from '../utils/indexedDB';
-import Modal from './ModalComponent';
 
 const handleClickEdit = (event, render) => {
   event.preventDefault();
@@ -25,8 +29,9 @@ const PostView = async (render) => {
   if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
 
   const {
-    title, contents, writer, contentDate, uid,
+    title, contents, writer, contentDate, deadline, applicant, recruitment, uid,
   } = post.data();
+  const checkDeadline = isDeadlineDate(deadline.toDate(), applicant, recruitment);
   const $postViewHeader = createElement('div', '', 'post-view-header');
   const $postViewTitle = createElement('h1', `${title}`, 'post-view-title');
   const $postViewSubTitle = createElement(
@@ -34,9 +39,13 @@ const PostView = async (render) => {
     ` 
       <div>${writer}</div>
       <div>작성일 ${formatPostCreateDate(contentDate.toDate())}<div>
+      <div>마감일 ${formatPostCreateDate(deadline.toDate())}<div>
+      <div>모집 현황 ${applicant}/${recruitment}</div>
     `,
-    'post-view-title',
+    'post-view-sub-title',
   );
+  $postViewSubTitle.append(RecruitmentStatus(checkDeadline));
+
   $postViewHeader.append($postViewTitle, $postViewSubTitle);
   const $postViewContents = createElement(
     'div',

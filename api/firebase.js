@@ -40,24 +40,28 @@ const getData = async (postId) => {
   return post;
 };
 
-const setData = async (title, contents, date, writer, uid) => {
+const setData = async (title, contents, deadline, recruitment, writer, uid) => {
   await addDoc(postCollection, {
     title,
     contents,
     writer,
     uid,
     hits: 0,
+    applicant: 0,
+    recruitment: parseInt(recruitment, 10),
+    applicants: [],
     tags: ['서울', 'javascript'],
     contentDate: Timestamp.fromDate(new Date()),
-    deadline: Timestamp.fromDate(new Date(date)),
+    deadline: Timestamp.fromDate(new Date(deadline)),
   });
 };
 
-const updateData = async (postId, title, contents, deadline) => {
+const updateData = async (postId, title, contents, deadline, recruitment) => {
   const data = doc(db, 'post', postId);
   const updatePromise = await updateDoc(data, {
     title,
     contents,
+    recruitment: parseInt(recruitment, 10),
     deadline: Timestamp.fromDate(new Date(deadline)),
   });
   return updatePromise;

@@ -7,11 +7,13 @@ const handleClickEdit = (event, render, postId) => {
   const $postTitleEdit = document.querySelector('.post-title-input');
   const $postDateEdit = document.querySelector('.post-date-input');
   const $postContentEdit = document.querySelector('.post-contents-input');
+  const $PostrecruitmentEdit = document.querySelector('.post-recruitment-input');
   const $errorMessage = document.querySelector('.error-message');
 
   const title = $postTitleEdit.value;
   const contents = $postContentEdit.value;
   const date = $postDateEdit.value;
+  const recruitment = $PostrecruitmentEdit.value || 1;
 
   if (!title) {
     $errorMessage.innerHTML = '제목을 입력해주세요.';
@@ -23,7 +25,7 @@ const handleClickEdit = (event, render, postId) => {
     return;
   }
 
-  updateData(postId, title, contents, date)
+  updateData(postId, title, contents, date, recruitment)
     .then(() => {
       const path = event.target.getAttribute('href');
       navigateTo(path, render);
@@ -47,7 +49,7 @@ const PostEdit = async (render) => {
 
   const user = await selectUser();
   const {
-    title, contents, deadline, uid,
+    title, contents, deadline, recruitment, uid,
   } = post.data();
   if (user.value.uid !== uid) throw new Error('접근권한이 없습니다.');
 
@@ -73,6 +75,10 @@ const PostEdit = async (render) => {
       />
     `,
   );
+  const $postRecruitmentEdit = createElement(
+    'div',
+    `모집 인원: <input type="number" class="post-recruitment-input" min="1" value=${recruitment} />`,
+  );
   const $postContentEdit = createElement(
     'div',
     `<textarea class="post-contents-input">${contents}</textarea>`,
@@ -95,6 +101,7 @@ const PostEdit = async (render) => {
   $postEdit.append(
     $postTitleEdit,
     $postDateEdit,
+    $postRecruitmentEdit,
     $postContentEdit,
     $errorMessage,
     $postEditButtonContainer,

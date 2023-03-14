@@ -1,5 +1,5 @@
 import Header from './components/HeaderComponent';
-import Post from './components/PostsComponent';
+import Posts from './components/PostsComponent';
 import PostWrite from './components/PostWriteComponent';
 import PostView from './components/PostViewComponent';
 import PostEdit from './components/PostEditComponent';
@@ -16,7 +16,7 @@ const BASE_URL = '/ensemble';
 const postIdRegExp = /\/\w{20}/g;
 
 const routes = [
-  { path: '/', component: Post },
+  { path: '/', component: Posts },
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
   { path: '/post/view', component: PostView },

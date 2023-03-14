@@ -1,3 +1,5 @@
+import RecruitmentStatus from './RecruitmentStatusComponent';
+
 import { createElement, navigateTo, isDeadlineDate } from '../utils/util';
 
 const handleClickPost = (event, render) => {
@@ -11,6 +13,7 @@ const Post = (post, render) => {
   const {
     title, contents, deadline, applicant, recruitment,
   } = post.data();
+  const checkDeadline = isDeadlineDate(deadline.toDate(), applicant, recruitment);
 
   const $post = createElement(
     'li',
@@ -24,20 +27,8 @@ const Post = (post, render) => {
   );
   const $postContainer = $post.querySelector('a');
   $postContainer.addEventListener('click', (event) => { handleClickPost(event, render); });
+  $postContainer.prepend(RecruitmentStatus(checkDeadline));
 
-  const checkDeadline = isDeadlineDate(deadline.toDate(), applicant, recruitment);
-  const $recruitmentStatus = createElement('div', '', 'recruitement-status');
-
-  if (checkDeadline) {
-    $recruitmentStatus.innerHTML = '모집완료';
-    $recruitmentStatus.classList.add('gray-status');
-    $postContainer.prepend($recruitmentStatus);
-    return $post;
-  }
-
-  $recruitmentStatus.innerHTML = '모집중';
-  $recruitmentStatus.classList.add('green-status');
-  $postContainer.prepend($recruitmentStatus);
   return $post;
 };
 

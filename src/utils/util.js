@@ -9,7 +9,7 @@ const authErrorMessage = {
 
 const today = new Date();
 
-const IsProductionMode = window.location.host === 'f-lab-edu.github.io';
+const isProductionMode = window.location.host === 'f-lab-edu.github.io';
 
 const isDeadlineDate = (date, applicant, recruitment) => {
   if (today > date) return true;
@@ -38,7 +38,7 @@ const KR_TIME_ZONE_DIFF = 9 * 60 * 60 * 1000;
 const formatPostCreateDate = (date) => new Date(date.getTime() + KR_TIME_ZONE_DIFF).toISOString().replace('T', ' ').slice(0, -5);
 
 const navigateTo = (path, render) => {
-  if (IsProductionMode) {
+  if (isProductionMode) {
     window.history.pushState(null, null, `/ensemble${path}`);
     render(path);
     return;
@@ -53,6 +53,6 @@ export {
   formatPostCreateDate,
   authErrorMessage,
   navigateTo,
-  IsProductionMode,
+  isProductionMode as IsProductionMode,
   isDeadlineDate,
 };
