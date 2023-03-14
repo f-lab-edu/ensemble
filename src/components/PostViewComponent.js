@@ -18,7 +18,7 @@ const handleClickDelete = (event, render, postId) => {
 };
 
 const PostView = async (render) => {
-  const $postView = createElement('div');
+  const $postView = createElement('div', '', 'post-view');
   const postId = window.location.pathname.split('/').slice(-1)[0];
 
   const post = await getData(postId);
@@ -51,7 +51,7 @@ const PostView = async (render) => {
   const user = await selectUser();
   if (user && user.value.uid === uid) {
     $postViewButtonContainer.innerHTML = `
-      <a href="/" id="post-delete-button">삭제</a>
+      <a href="/" class="red-btn" id="post-delete-button">삭제</a>
       <a href="/post/edit/${postId}" class="green-btn" id="post-edit-button">수정</a>
     `;
     const $postDeleteButton = $postViewButtonContainer.querySelector('#post-delete-button');

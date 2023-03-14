@@ -1,5 +1,5 @@
 import Header from './components/HeaderComponent';
-import Post from './components/PostComponent';
+import Post from './components/PostsComponent';
 import PostWrite from './components/PostWriteComponent';
 import PostView from './components/PostViewComponent';
 import PostEdit from './components/PostEditComponent';

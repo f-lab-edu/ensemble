@@ -3,7 +3,17 @@ import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
 } from 'firebase/auth';
 import {
-  getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, deleteDoc, Timestamp,
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  Timestamp,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -21,7 +31,7 @@ const auth = getAuth(app);
 const postCollection = collection(db, 'post');
 
 const fetchData = async () => {
-  const posts = await getDocs(postCollection);
+  const posts = await getDocs(query(postCollection, orderBy('contentDate', 'desc')));
   return posts;
 };
 

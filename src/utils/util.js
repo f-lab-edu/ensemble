@@ -7,7 +7,15 @@ const authErrorMessage = {
   'auth/user-not-found': '이메일또는 비밀번호를 잘못입력하셨습니다.',
 };
 
+const today = new Date();
+
 const IsProductionMode = window.location.host === 'f-lab-edu.github.io';
+
+const isDeadlineDate = (date, applicant, recruitment) => {
+  if (today > date) return true;
+  if (applicant === recruitment || applicant > recruitment) return true;
+  return false;
+};
 
 const createElement = (tagName, innerHTML, className) => {
   const $elemet = document.createElement(tagName);
@@ -46,4 +54,5 @@ export {
   authErrorMessage,
   navigateTo,
   IsProductionMode,
+  isDeadlineDate,
 };

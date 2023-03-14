@@ -13,13 +13,13 @@ button {
 }
 header {
   position: sticky;
-  width: 100%;
   height: 5rem;
-  background: rgb(241, 243, 245);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 9;
+  box-shadow: 0 2px 4px 0 hsla(0,0%,80.8%,.5);
+  padding: 0 60px;
 }
 a {
   color: inherit;
@@ -28,6 +28,7 @@ a {
 }
 .title {
   font-size: 2.4rem;
+  font-weight: 700;
 }
 nav {
   margin-right: 0.5rem;
@@ -65,6 +66,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   margin: 2rem 0px;
+  padding: 0px 9.5rem;
 }
 .post-container {
   width: 20rem;
@@ -75,13 +77,34 @@ nav {
   border-radius: 4px;
   border: 2px solid rgb(206, 212, 218);
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
+  padding: 0.58rem 0.78rem;
+}
+.post-container:hover {
   background: rgb(245, 245, 245);
+}
+.post-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0.1rem 0;
 }
 .post-title-input {
   font-size: 2rem;
   outline: 0px;
   font-weight: 700;
   border-width: 0px;
+  margin: 0.5rem 0;
+}
+.post-body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 4.8rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 .post-button {
   display: flex;
@@ -116,15 +139,24 @@ nav {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 167, 96);
 }
-#post-delete-button {
+.blue-btn{
+  color: rgb(255, 255, 255);
+  background-color: rgb(66, 124, 231);
+}
+.blue-btn:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(61, 114, 212);
+}
+.red-btn {
   color: rgb(255, 255, 255);
   background-color: rgb(230, 77, 50);
 }
-#post-delete-button:hover {
+.red-btn:hover {
   color: rgb(255, 255, 255);
-  background-color: rgb(228, 61, 32);
+  background-color: rgb(189, 51, 27);
 }
 .post-contents-input {
+  margin: 1.2rem 0;
   width: 100%;
 	height: 200px;
 	padding: 10px;
@@ -181,6 +213,9 @@ nav {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+}
+.post-view {
+  padding: 2rem 5rem;
 }
 .post-view-contents {
   padding: 16px 0
@@ -260,4 +295,22 @@ nav {
   color: rgb(0, 0, 0);
   background-color: #fff;
 }
-
+.post-people-input {
+  width: 40px;
+}
+.recruitement-status {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50rem;
+  margin: 0.2rem 0;
+}
+.gray-status {
+  color: #fff;
+  background-color: #ced4da;
+}
+.green-status {
+  color: #fff;
+  background-color: #1dc078;
+}
