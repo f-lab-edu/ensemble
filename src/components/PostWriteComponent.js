@@ -60,7 +60,7 @@ const PostWrite = (render) => {
   const $postButton = createElement(
     'div',
     `
-      <a href="/" id="post-register-button">등록</a>
+      <a href="/" class="green-btn" id="post-register-button">등록</a>
       <a href="/" class="post-cancel-button" data-link>취소</a>
     `,
     'post-button',

@@ -18,7 +18,7 @@ const Post = (render) => {
       $headerSection.innerHTML = user
         ? `
           <p>함께 성장할 스터디를 모집해보세요</p>
-          <a href="/postwrite" data-link>글쓰기</a>
+          <a href="/post/write" data-link>글쓰기</a>
         `
         : `
           <p>함께 성장할 스터디를 모집해보세요</p>
@@ -37,7 +37,7 @@ const Post = (render) => {
         const $li = createElement(
           'li',
           `
-            <a href="/postview/${post.id}">
+            <a href="/post/view/${post.id}">
               <div class="post-title">${title}</div>
               <div class="post-body">${contents}</div>
             </a>
