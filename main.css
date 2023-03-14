@@ -171,6 +171,51 @@ nav {
   color: rgb(255,0,0);
   font-weight: 700;
 }
+.navigation-container svg{
+  width: 30px;
+  margin-top: 15px;
+  padding: 10px;
+}
+.navigation-container:hover path {
+  fill: #00c471;
+}
+.active {
+  display: flex !important;
+}
+.navigation-container:hover:before {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  width: 24px;
+  height: 24px;
+  top: 67px;
+  right: 80px;
+  transform: rotate(45deg);
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  border-bottom: none;
+  z-index: 11;
+}
+.profile-modal {
+  display: none; 
+  position: absolute;
+  width: 240px;
+  height: 150px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgba(33,37,41,.24);
+  background-color: #fff;
+  top: 79px;
+  right: 32px;
+  z-index: 10;
+  border: 1px solid #e0e0e0;
+  justify-content: start;
+  align-items: end;
+}
+#logout-button {
+  padding: 20px;
+  font-size: 0.9rem;
+}
 .user-title{
   text-align: center;
 }
