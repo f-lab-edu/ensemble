@@ -7,7 +7,17 @@ const authErrorMessage = {
   'auth/user-not-found': '이메일또는 비밀번호를 잘못입력하셨습니다.',
 };
 
-const IsProductionMode = window.location.host === 'f-lab-edu.github.io';
+const today = new Date();
+
+const isProductionMode = window.location.host === 'f-lab-edu.github.io';
+
+const isApply = (applicants, email) => applicants.some((applicant) => applicant.email === email);
+
+const isDeadlineDate = (date, applicant, recruitment) => {
+  if (today > date) return true;
+  if (applicant === recruitment || applicant > recruitment) return true;
+  return false;
+};
 
 const createElement = (tagName, innerHTML, className) => {
   const $elemet = document.createElement(tagName);
@@ -30,7 +40,7 @@ const KR_TIME_ZONE_DIFF = 9 * 60 * 60 * 1000;
 const formatPostCreateDate = (date) => new Date(date.getTime() + KR_TIME_ZONE_DIFF).toISOString().replace('T', ' ').slice(0, -5);
 
 const navigateTo = (path, render) => {
-  if (IsProductionMode) {
+  if (isProductionMode) {
     window.history.pushState(null, null, `/ensemble${path}`);
     render(path);
     return;
@@ -45,5 +55,6 @@ export {
   formatPostCreateDate,
   authErrorMessage,
   navigateTo,
-  IsProductionMode,
+  isDeadlineDate,
+  isApply,
 };

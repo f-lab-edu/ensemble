@@ -3,7 +3,17 @@ import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
 } from 'firebase/auth';
 import {
-  getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, deleteDoc, Timestamp,
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  Timestamp,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -21,7 +31,7 @@ const auth = getAuth(app);
 const postCollection = collection(db, 'post');
 
 const fetchData = async () => {
-  const posts = await getDocs(postCollection);
+  const posts = await getDocs(query(postCollection, orderBy('contentDate', 'desc')));
   return posts;
 };
 
@@ -30,24 +40,28 @@ const getData = async (postId) => {
   return post;
 };
 
-const setData = async (title, contents, date, writer, uid) => {
+const setData = async (title, contents, deadline, recruitment, writer, uid) => {
   await addDoc(postCollection, {
     title,
     contents,
     writer,
     uid,
     hits: 0,
+    applicant: 0,
+    recruitment: parseInt(recruitment, 10),
+    applicants: [],
     tags: ['서울', 'javascript'],
     contentDate: Timestamp.fromDate(new Date()),
-    deadline: Timestamp.fromDate(new Date(date)),
+    deadline: Timestamp.fromDate(new Date(deadline)),
   });
 };
 
-const updateData = async (postId, title, contents, deadline) => {
+const updateData = async (postId, title, contents, deadline, recruitment) => {
   const data = doc(db, 'post', postId);
   const updatePromise = await updateDoc(data, {
     title,
     contents,
+    recruitment: parseInt(recruitment, 10),
     deadline: Timestamp.fromDate(new Date(deadline)),
   });
   return updatePromise;
@@ -73,6 +87,56 @@ const logout = async () => {
   return logOutPromise;
 };
 
+const applyStudy = async (postId, applicants, email) => {
+  const data = doc(db, 'post', postId);
+  const applyPromise = await updateDoc(data, {
+    applicants: [...applicants, { email, status: 'pending' }],
+  });
+  return applyPromise;
+};
+
+const cancelSutdy = async (postId, applicants, email) => {
+  const data = doc(db, 'post', postId);
+  const cancelPromise = await updateDoc(data, {
+    applicants: applicants.filter((applicant) => applicant.email !== email),
+  });
+  return cancelPromise;
+};
+
+const acceptApplicant = async (postId, email) => {
+  const data = doc(db, 'post', postId);
+  const { applicant, applicants } = (await getDoc(data)).data();
+  const modifiedApplicants = applicants.map((application) => {
+    if (application.email === email) {
+      return Object.assign(application, { status: 'accept' });
+    }
+    return application;
+  });
+  const acceptPromise = await updateDoc(data, {
+    applicant: applicant + 1,
+    applicants: modifiedApplicants,
+  });
+
+  return acceptPromise;
+};
+
+const cancelApplicant = async (postId, email) => {
+  const data = doc(db, 'post', postId);
+  const { applicant, applicants } = (await getDoc(data)).data();
+  const modifiedApplicants = applicants.map((application) => {
+    if (application.email === email) {
+      return Object.assign(application, { status: 'pending' });
+    }
+    return application;
+  });
+  const cancelPromise = await updateDoc(data, {
+    applicant: applicant - 1,
+    applicants: modifiedApplicants,
+  });
+
+  return cancelPromise;
+};
+
 export {
   fetchData,
   getData,
@@ -82,4 +146,8 @@ export {
   createUser,
   signIn,
   logout,
+  applyStudy,
+  cancelSutdy,
+  acceptApplicant,
+  cancelApplicant,
 };

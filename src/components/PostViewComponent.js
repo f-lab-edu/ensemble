@@ -1,32 +1,30 @@
-import { createElement, formatPostCreateDate, navigateTo } from '../utils/util';
+import PostViewButtons from './PostViewButtonsComponent';
+import RecruitmentStatus from './RecruitmentStatusComponent';
+import ApplicantsModal from './ApplicantsModalComponent';
+
+import {
+  createElement, formatPostCreateDate, isDeadlineDate,
+} from '../utils/util';
 import { getData } from '../../api/firebase';
 import selectUser from '../utils/indexedDB';
-import Modal from './ModalComponent';
 
-const handleClickEdit = (event, render) => {
+const handleClickApplications = (event, render, postId, applicants) => {
   event.preventDefault();
 
-  const path = event.target.getAttribute('href');
-  if (window.location.pathname === path) return;
-  navigateTo(path, render);
-};
-
-const handleClickDelete = (event, render, postId) => {
-  event.preventDefault();
-  const $app = document.querySelector('#app');
-  $app.append(Modal(render, postId));
+  document.body.append(ApplicantsModal(render, postId, applicants));
 };
 
 const PostView = async (render) => {
-  const $postView = createElement('div');
+  const $postView = createElement('div', '', 'post-view');
   const postId = window.location.pathname.split('/').slice(-1)[0];
 
   const post = await getData(postId);
   if (!post.data()) throw new Error('존재하지 않는 게시글입니다.');
 
   const {
-    title, contents, writer, contentDate, uid,
+    title, contents, writer, contentDate, deadline, applicant, recruitment, applicants, uid,
   } = post.data();
+  const checkDeadline = isDeadlineDate(deadline.toDate(), applicant, recruitment);
   const $postViewHeader = createElement('div', '', 'post-view-header');
   const $postViewTitle = createElement('h1', `${title}`, 'post-view-title');
   const $postViewSubTitle = createElement(
@@ -34,9 +32,25 @@ const PostView = async (render) => {
     ` 
       <div>${writer}</div>
       <div>작성일 ${formatPostCreateDate(contentDate.toDate())}<div>
+      <div>마감일 ${formatPostCreateDate(deadline.toDate())}<div>
+      <div>모집 현황 ${applicant}/${recruitment}</div>
     `,
-    'post-view-title',
+    'post-view-sub-title',
   );
+  $postViewSubTitle.append(RecruitmentStatus(checkDeadline));
+
+  const user = await selectUser();
+  if (user && user.value.uid === uid) {
+    const $applicationButtons = createElement(
+      'div',
+      '<a id="applicants-view-button" class="blue-btn">신청 리스트</a>',
+      'applications-button',
+    );
+    const $applicationListButton = $applicationButtons.querySelector('#applicants-view-button');
+    $applicationListButton.addEventListener('click', (event) => handleClickApplications(event, render, postId, applicants));
+    $postViewSubTitle.append($applicationButtons);
+  }
+
   $postViewHeader.append($postViewTitle, $postViewSubTitle);
   const $postViewContents = createElement(
     'div',
@@ -47,25 +61,21 @@ const PostView = async (render) => {
     'post-view-contents',
   );
 
-  const $postViewButtonContainer = createElement('div', '', 'post-button');
-  const user = await selectUser();
-  if (user && user.value.uid === uid) {
-    $postViewButtonContainer.innerHTML = `
-      <a href="/" id="post-delete-button">삭제</a>
-      <a href="/post/edit/${postId}" class="green-btn" id="post-edit-button">수정</a>
-    `;
-    const $postDeleteButton = $postViewButtonContainer.querySelector('#post-delete-button');
-    $postDeleteButton.addEventListener('click', (event) => handleClickDelete(event, render, postId));
+  if (user) {
+    const $postViewButtonContainer = PostViewButtons(
+      render,
+      user,
+      uid,
+      postId,
+      applicants,
+      checkDeadline,
+    );
+    $postView.append($postViewHeader, $postViewContents, $postViewButtonContainer);
 
-    const $postEditButton = $postViewButtonContainer.querySelector('#post-edit-button');
-    $postEditButton.addEventListener('click', (event) => handleClickEdit(event, render));
+    return $postView;
   }
 
-  $postView.append(
-    $postViewHeader,
-    $postViewContents,
-    $postViewButtonContainer,
-  );
+  $postView.append($postViewHeader, $postViewContents);
 
   return $postView;
 };

@@ -8,13 +8,13 @@ const handleClickCancel = (event) => {
   const $modal = document.querySelector('.modal');
   $app.removeChild($modal);
 };
+
 const handleClickConfirm = (event, render, postId) => {
   event.preventDefault();
 
   deleteData(postId)
     .then(() => {
       const path = event.target.getAttribute('href');
-      if (window.location.pathname === path) return;
       navigateTo(path, render);
     });
 };

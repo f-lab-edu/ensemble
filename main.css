@@ -13,13 +13,13 @@ button {
 }
 header {
   position: sticky;
-  width: 100%;
   height: 5rem;
-  background: rgb(241, 243, 245);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 9;
+  box-shadow: 0 2px 4px 0 hsla(0,0%,80.8%,.5);
+  padding: 0 60px;
 }
 a {
   color: inherit;
@@ -28,6 +28,7 @@ a {
 }
 .title {
   font-size: 2.4rem;
+  font-weight: 700;
 }
 nav {
   margin-right: 0.5rem;
@@ -65,6 +66,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   margin: 2rem 0px;
+  padding: 0px 9.5rem;
 }
 .post-container {
   width: 20rem;
@@ -75,13 +77,34 @@ nav {
   border-radius: 4px;
   border: 2px solid rgb(206, 212, 218);
   box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px 0px;
+  padding: 0.58rem 0.78rem;
+}
+.post-container:hover {
   background: rgb(245, 245, 245);
+}
+.post-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0.1rem 0;
 }
 .post-title-input {
   font-size: 2rem;
   outline: 0px;
   font-weight: 700;
   border-width: 0px;
+  margin: 0.5rem 0;
+}
+.post-body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 4.8rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 .post-button {
   display: flex;
@@ -116,15 +139,24 @@ nav {
   color: rgb(255, 255, 255);
   background-color: rgb(0, 167, 96);
 }
-#post-delete-button {
+.blue-btn{
+  color: rgb(255, 255, 255);
+  background-color: rgb(66, 124, 231);
+}
+.blue-btn:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(61, 114, 212);
+}
+.red-btn {
   color: rgb(255, 255, 255);
   background-color: rgb(230, 77, 50);
 }
-#post-delete-button:hover {
+.red-btn:hover {
   color: rgb(255, 255, 255);
-  background-color: rgb(228, 61, 32);
+  background-color: rgb(189, 51, 27);
 }
 .post-contents-input {
+  margin: 1.2rem 0;
   width: 100%;
 	height: 200px;
 	padding: 10px;
@@ -138,6 +170,51 @@ nav {
   font-size: 1rem;
   color: rgb(255,0,0);
   font-weight: 700;
+}
+.navigation-container svg{
+  width: 30px;
+  margin-top: 15px;
+  padding: 10px;
+}
+.navigation-container:hover path {
+  fill: #00c471;
+}
+.active {
+  display: flex !important;
+}
+.navigation-container:hover:before {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  width: 24px;
+  height: 24px;
+  top: 67px;
+  right: 80px;
+  transform: rotate(45deg);
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  border-bottom: none;
+  z-index: 11;
+}
+.profile-modal {
+  display: none; 
+  position: absolute;
+  width: 240px;
+  height: 150px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgba(33,37,41,.24);
+  background-color: #fff;
+  top: 79px;
+  right: 32px;
+  z-index: 10;
+  border: 1px solid #e0e0e0;
+  justify-content: start;
+  align-items: end;
+}
+#logout-button {
+  padding: 20px;
+  font-size: 0.9rem;
 }
 .user-title{
   text-align: center;
@@ -181,6 +258,9 @@ nav {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+}
+.post-view {
+  padding: 2rem 5rem;
 }
 .post-view-contents {
   padding: 16px 0
@@ -260,4 +340,63 @@ nav {
   color: rgb(0, 0, 0);
   background-color: #fff;
 }
-
+.post-recruitment-input {
+  width: 40px;
+}
+.recruitement-status {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50rem;
+  margin: 0.2rem 0;
+}
+.gray-status {
+  color: #fff;
+  background-color: #ced4da;
+}
+.green-status {
+  color: #fff;
+  background-color: #1dc078;
+}
+.applications-button {
+  display: flex;
+  justify-content: end;
+}
+.applications-button a{
+  margin: 0 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0px 22px;
+  height: 42px;
+  line-height: 2.5;
+}
+.applicants-container {
+  z-index: 11;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  width: 377px;
+  height: 457px;
+  border-radius: 4px;
+}
+.modal-content{
+  display: flex;
+  flex-direction: column;
+}
+.modal-content div {
+  margin: 0.5rem 1rem;
+}
+.applicant {
+  display: flex;
+}
+.applicant a {
+  font-weight: 700;
+  border-radius: 50rem;
+  font-size: 1rem;
+  padding: 0.35em 0.65em;
+}
